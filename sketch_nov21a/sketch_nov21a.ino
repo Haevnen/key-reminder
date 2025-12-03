@@ -12,8 +12,9 @@
 
 #define SERVO_POS_CLOSE 0
 #define SERVO_POS_OPEN 90
-#define DELAY_TIME 100
-#define DELAY_TIME_LED 1000
+#define DELAY_TIME 50
+#define DELAY_TIME_RED_LED 300
+#define DELAY_TIME_GREEN_LED 1000
 
 unsigned long prevBlink = 0;
 unsigned long prevTime = 0;
@@ -114,7 +115,7 @@ void loop() {
 
     case DOOR_OPEN_ALERT_ON:
       // blink red led and buzzer
-      if (millis() - prevBlink >= 1000) {
+      if (millis() - prevBlink >= DELAY_TIME_RED_LED) {
         prevBlink = millis();
         redLedState = !redLedState;
         digitalWrite(RED_PIN, redLedState);
@@ -128,7 +129,7 @@ void loop() {
     case DOOR_OPEN_ALERT_OFF:
       digitalWrite(RED_PIN, LOW);
       // blink green led to notify valid card
-      if (millis() - prevTime >= 1000) {
+      if (millis() - prevTime >= DELAY_TIME_GREEN_LED) {
         prevTime = millis();
         greenLedState = !greenLedState;
         digitalWrite(GREEN_PIN, greenLedState);
